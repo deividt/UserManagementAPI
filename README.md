@@ -36,4 +36,43 @@ Great, what about Errors occurred when retrieving non-existent users?
 Is there anything that can be done in order to improve the GetUsers endpoint?
 ```
 
+### Prompts used to implement the middleware pipeline
+
+
+```
+ write a middleware that logs:
+
+    HTTP method (e.g., GET, POST).
+
+    Request path.
+
+    Response status code.
+```
+
+```
+Create a middleware that:
+
+    Catches unhandled exceptions.
+
+    Return consistent error responses in JSON format (e.g., { "error": "Internal server error." }).
+```
+
+```
+Implement a middleware that:
+            
+- Validates tokens from incoming requests.
+            
+- Allows access only to users with valid tokens.
+            
+- Returns a 401 Unauthorized response for invalid tokens.
+```
+
+```
+I have removed the validation for development endpoints. Now, how can i test it in the swagger?
+```
+
+```
+I'm testing using swagger, but even i have authenticated, is returning `"No token provided in request"`, can you help me solve it?
+```
+
 
