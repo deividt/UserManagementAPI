@@ -44,28 +44,54 @@ public class TokenValidationMiddleware(RequestDelegate next, ILogger<TokenValida
 
     private string? GetTokenFromRequest(HttpRequest request)
     {
+        // Debug logging to see all headers
+        logger.LogInformation("Request headers: {Headers}",
+            string.Join(", ", request.Headers.Select(h => $"{h.Key}={h.Value}")));
+
         // Try to get token from Authorization header (Bearer token)
-        if (request.Headers.ContainsKey("Authorization"))
+        var authHeaders = request.Headers.Where(h =>
+            string.Equals(h.Key, "Authorization", StringComparison.OrdinalIgnoreCase));
+
+        foreach (var header in authHeaders)
         {
-            var authHeader = request.Headers["Authorization"].ToString();
-            if (authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            {
-                return authHeader.Substring("Bearer ".Length).Trim();
-            }
+            var authHeaderValue = header.Value.ToString();
+            logger.LogInformation("Found Authorization header: {AuthHeader}", authHeaderValue);
+
+            if (string.IsNullOrEmpty(authHeaderValue) ||
+                !authHeaderValue.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            var token = authHeaderValue.Substring("Bearer ".Length).Trim();
+            logger.LogInformation("Extracted token: {Token}", token);
+            return token;
         }
 
         // Try to get token from custom header
-        if (request.Headers.ContainsKey("X-Token"))
+        var xTokenHeaders = request.Headers.Where(h =>
+            string.Equals(h.Key, "X-Token", StringComparison.OrdinalIgnoreCase));
+
+        foreach (var header in xTokenHeaders)
         {
-            return request.Headers["X-Token"].ToString();
+            var tokenValue = header.Value.ToString();
+            if (string.IsNullOrEmpty(tokenValue))
+                continue;
+
+            logger.LogInformation("Found X-Token header: {Token}", tokenValue);
+            return tokenValue;
         }
 
         // Try to get token from query parameter
         if (request.Query.ContainsKey("token"))
         {
-            return request.Query["token"].ToString();
+            var tokenValue = request.Query["token"].ToString();
+            if (!string.IsNullOrEmpty(tokenValue))
+            {
+                logger.LogInformation("Found token in query parameter: {Token}", tokenValue);
+                return tokenValue;
+            }
         }
 
+        logger.LogWarning("No token found in any expected location");
         return null;
     }
 
