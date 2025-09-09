@@ -1,4 +1,3 @@
-using UserManagementAPI;
 using UserManagementAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +11,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<TokenValidationMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 if (app.Environment.IsDevelopment())
