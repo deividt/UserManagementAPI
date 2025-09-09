@@ -2,7 +2,11 @@
 
 This api is a user management api, part of the backend of the Microsoft Backend Course with .NET.
 
-### Prompt used to generate the API endpoints
+### Prompts
+
+I have used the copilot with agent mode directly in the IDE, so that it helped me already changing the code to me. 
+
+#### Prompt used to generate the API endpoints
 
 ```
 In my UsersController, add the endpoints for the following operations:
@@ -22,7 +26,7 @@ Use the best practices and use a static list to store the users.
 
 ```
 
-### Prompts used to help idenfity errors and improve code quality
+#### Prompts used to help idenfity errors and improve code quality
 
 ```
 Can you see if there is any errors on Users were being added without proper validation and fix them?
@@ -36,7 +40,7 @@ Great, what about Errors occurred when retrieving non-existent users?
 Is there anything that can be done in order to improve the GetUsers endpoint?
 ```
 
-### Prompts used to implement the middleware pipeline
+#### Prompts used to implement the middleware pipeline
 
 
 ```
