@@ -1,6 +1,6 @@
 ## User Management API
 
-This api is a user management api, part of the backend of the Microsoft Backend Training.
+This api is a user management api, part of the backend of the Microsoft Backend Course with .NET.
 
 ### Prompt used to generate the API endpoints
 
