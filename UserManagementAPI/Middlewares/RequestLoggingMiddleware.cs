@@ -1,4 +1,4 @@
-namespace UserManagementAPI;
+namespace UserManagementAPI.Middlewares;
 
 public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
 {
